@@ -14,7 +14,7 @@
     <!-- create a div to contain buttons -->
     <div class="row">
         <div class="col"></div>
-        <div class="col-md-11" id="button-list">text</div>
+        <div class="col-md-10" id="button-list"></div>
         <div class="col"></div>
 
     </div>
@@ -40,7 +40,6 @@
 
 <script>
 
-    $(document).ready(renderButtons()); 
     // create an array for predetermined buttons to load with page
     var animals = ["dogs", "cats", "birds"]
 
@@ -53,7 +52,7 @@
         for (var i=0; i < animals.length; i++) {
 
             var a = $("<button>");
-            a.addClass("btn btn-info");
+            a.addClass("animal-btn");
             a.attr("type", button)
             a.attr("data-name", animals[i]);
             a.text(animals[i]);
@@ -95,6 +94,15 @@
         event.preventDefault();
 
         var animal = $("#animal-input").val().trim();
-    }
+
+        animals.push(animal);
+        console.log(animals);
+
+        renderButtons();
+    });
+
+    $(document).on("click", ".animal-btn", displayGifs);
+
+    renderButtons();
 </script>
 </html>
