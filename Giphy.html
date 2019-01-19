@@ -9,39 +9,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 
-<body>
-
+<body style="margin: 10px; padding: 10px;">
+    <h1>My Giphy Search!</h1>
     <!-- create a div to contain buttons -->
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-md-10" id="button-list"></div>
-        <div class="col"></div>
-
-    </div>
+    <div class="button-list">
+        <button class="animal" data-name="dogs">dogs</button>
+        <button class="animal" data-name="cats">cats</button>
+        <button class="animal" data-name="birds">birds</button>
+    </div><br>
 
     <!-- create a div to hold gifs from giphy api -->
     <!-- create a div to contain search bar -->
-    <div class="row">
-        <div class="col-md-9" id="gif-space">
+    <!-- create an input form and button to add a new animal to gif selections -->
+    <form id="animal-form">
+        <label for="animal-input">Add a new selection</label>
+        <input type="text" id="animal-input"><br>
 
-        </div>
-        <div class="col-md-3">
-            <!-- create an input form and button to add a new animal to gif selections -->
-            <form id="animal-form">
-                <label for="animal-input">Add a new selection</label>
-                <input type="text" id="animal-input"><br>
+        <input id="add-animal" type="submit" value="Add new Animal">
+    </form><br>
 
-                <input id="add-animal" type="submit" value="Add new Animal">
-            </form>
-        </div>
-    </div>
+    <div class="gif-space"></div>
 
 </body>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
 <script>
-
+    $(document).ready
     // create an array for predetermined buttons to load with page
-    var animals = ["dogs", "cats", "birds"]
+    var animals = ["dogs", "cats", "birds"];
 
     // function to display buttons
     function renderButtons() {
@@ -52,8 +47,7 @@
         for (var i=0; i < animals.length; i++) {
 
             var a = $("<button>");
-            a.addClass("animal-btn");
-            a.attr("type", button)
+            a.addClass("animal");
             a.attr("data-name", animals[i]);
             a.text(animals[i]);
             $("#button-list").append(a);
@@ -64,8 +58,8 @@
 
     function displayGifs() {
 
-        var animalName = $(this).attr("data-name");
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animalName + "&api_key=dc6zaROxFJmzC&limit=10";
+        var animal = $(this).attr("data-name");
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=uRcfLQsDaZP1dMr5W4MmKipcPMijXbR7&limit=10";
 
         $.ajax({
             url: queryURL,
@@ -88,7 +82,7 @@
                 $("#gif-space").prepend(animalDiv);
             }
         }
-    )};
+    )}
 
     $("#add-animal").on("click", function(event) {
         event.preventDefault();
@@ -101,7 +95,7 @@
         renderButtons();
     });
 
-    $(document).on("click", ".animal-btn", displayGifs);
+    $(document).on("click", ".animal", displayGifs);
 
     renderButtons();
 </script>
