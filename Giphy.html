@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Giphy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 
@@ -13,7 +13,10 @@
 
     <!-- create a div to contain buttons -->
     <div class="row">
-        <div class="col" id="button-list"></div>
+        <div class="col"></div>
+        <div class="col-md-11" id="button-list">text</div>
+        <div class="col"></div>
+
     </div>
 
     <!-- create a div to hold gifs from giphy api -->
@@ -36,8 +39,62 @@
 </body>
 
 <script>
-    // create an array for predetermined buttons to load with page
 
+    $(document).ready(renderButtons()); 
+    // create an array for predetermined buttons to load with page
+    var animals = ["dogs", "cats", "birds"]
+
+    // function to display buttons
+    function renderButtons() {
+        
+        $("#button-list").empty();
+
+        //loops through the array of animals
+        for (var i=0; i < animals.length; i++) {
+
+            var a = $("<button>");
+            a.addClass("btn btn-info");
+            a.attr("type", button)
+            a.attr("data-name", animals[i]);
+            a.text(animals[i]);
+            $("#button-list").append(a);
+
+        }
+    }
     // use ajax to retrieve api data
+
+    function displayGifs() {
+
+        var animalName = $(this).attr("data-name");
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animalName + "&api_key=dc6zaROxFJmzC&limit=10";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response) {
+            console.log(queryURL);
+            console.log(response);
+            var results = response.data;
+
+            for (var i=0; i < results.length; i++) {
+
+                var animalDiv = $("<div>");
+                var p = $("<p>").text("Rating: " + results[i].rating);
+                var animalImage = $("<img>");
+                animalImage.attr("src", results[i].images.fixed_height.url);
+
+                animalDiv.append(p);
+                animalDiv.append(animalImage);
+
+                $("#gif-space").prepend(animalDiv);
+            }
+        }
+    )};
+
+    $("#add-animal").on("click", function(event) {
+        event.preventDefault();
+
+        var animal = $("#animal-input").val().trim();
+    }
 </script>
 </html>
