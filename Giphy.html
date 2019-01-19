@@ -13,9 +13,9 @@
     <h1>My Giphy Search!</h1>
     <!-- create a div to contain buttons -->
     <div class="button-list">
-        <button class="animal" data-name="dogs">dogs</button>
-        <button class="animal" data-name="cats">cats</button>
-        <button class="animal" data-name="birds">birds</button>
+        <button type="button" class="btn btn-info" data-name="dogs">dogs</button>
+        <button type="button" class="btn btn-info" data-name="cats">cats</button>
+        <button type="button" class="btn btn-info" data-name="birds">birds</button>
     </div><br>
 
     <!-- create a div to hold gifs from giphy api -->
@@ -25,7 +25,7 @@
         <label for="animal-input">Add a new selection</label>
         <input type="text" id="animal-input"><br>
 
-        <input id="add-animal" type="submit" value="Add new Animal">
+        <input id="add-animal" type="submit" class="btn btn-success" value="Add new Animal">
     </form><br>
 
     <div class="gif-space"></div>
@@ -34,7 +34,6 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
 <script>
-    $(document).ready
     // create an array for predetermined buttons to load with page
     var animals = ["dogs", "cats", "birds"];
 
@@ -47,13 +46,13 @@
         for (var i=0; i < animals.length; i++) {
 
             var a = $("<button>");
-            a.addClass("animal");
+            a.addClass("btn btn-info");
             a.attr("data-name", animals[i]);
             a.text(animals[i]);
             $("#button-list").append(a);
 
         }
-    }
+    };renderButtons();
     // use ajax to retrieve api data
 
     function displayGifs() {
@@ -82,7 +81,7 @@
                 $("#gif-space").prepend(animalDiv);
             }
         }
-    )}
+    )};
 
     $("#add-animal").on("click", function(event) {
         event.preventDefault();
@@ -95,8 +94,8 @@
         renderButtons();
     });
 
-    $(document).on("click", ".animal", displayGifs);
+    $(document).on("click", ".btn btn-info", displayGifs);
 
-    renderButtons();
+    
 </script>
 </html>
